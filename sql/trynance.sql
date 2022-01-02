@@ -5,7 +5,7 @@ DROP DATABASE trynance;
 CREATE DATABASE trynance;
 \connect trynance;
 
-\i tryanance-schema.sql
+\i trynance-schema.sql
 \i trynance-seed.sql
 
 \echo 'Delete and recreate trynance_test db?'

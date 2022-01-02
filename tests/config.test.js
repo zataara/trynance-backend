@@ -21,6 +21,6 @@ describe("configurations come from environment", () => {
     expect(config.getDatabaseUri()).toEqual("trynance");
     process.env.NODE_ENV = "test";
 
-    expect(config.getDatabaseUri()).toEqual("trynance-test");
+    expect(config.getDatabaseUri()).toEqual("trynance_test");
   });
 });

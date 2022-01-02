@@ -9,7 +9,7 @@ const PORT = +process.env.PORT || 3003;
 
 function getDatabaseUri() {
   return process.env.NODE_ENV === "test"
-    ? "trynance-test"
+    ? "trynance_test"
     : process.env.DATABASE_URL || "trynance";
 }
 

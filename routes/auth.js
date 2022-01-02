@@ -5,6 +5,7 @@ const express = require("express");
 const router = new express.Router();
 const { createToken } = require("../helpers/tokens");
 const userRegisterSchema = require("../schemas/userRegister.json");
+const userAuthSchema = require("../schemas/userAuthSchema")
 const { BadRequestError } = require("../expressError");
 const jsonschema = require("jsonschema");
 

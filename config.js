@@ -8,8 +8,8 @@ const SECRET_KEY = process.env.SECRET_KEY || "secret-key";
 const PORT = +process.env.PORT || 3003;
 
 function getDatabaseUri() {
-  return process.env.NODE_ENv === "test"
-    ? "trynance_test"
+  return process.env.NODE_ENV === "test"
+    ? "trynance-test"
     : process.env.DATABASE_URL || "trynance";
 }
 

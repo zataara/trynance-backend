@@ -18,7 +18,7 @@ router.post("/token", async function (req, res, next) {
     const validator = jsonschema.validate(req.body, userAuthSchema);
     if(!validator.valid) {
       const errors = validator.errors.map(e=> e.stack);
-      throw new BadRequstError(errors);
+      throw new BadRequestError(errors);
     }
 
     const { username, password } = req.body;
@@ -33,7 +33,7 @@ router.post("/token", async function (req, res, next) {
 
 router.post("/register", async function (req, res, next) {
   try {
-    const validator = jsonscheme.validate(req.body, 
+    const validator = jsonschema.validate(req.body, 
       userRegisterSchema);
       if(!validator.valid) {
         const errors = validator.errors.map(e=> e.stack);

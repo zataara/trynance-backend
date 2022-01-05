@@ -16,3 +16,4 @@ CREATE DATABASE trynance_test;
 \connect trynance_test
 
 \i trynance-schema.sql
+\i trynance-seed.sql

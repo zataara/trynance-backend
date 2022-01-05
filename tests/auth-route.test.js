@@ -5,99 +5,110 @@ const request = require("supertest");
 const app = require("../app");
 
 const {
-  _beforeAll,
-  _afterAll,
-  _beforeEach,
-  _afterEach,
-} = require("./_testTemplates");
+  _BeforeAll,
+  _BeforeEach,
+  _AfterEach,
+  _AfterAll,
+} = require("./_testRouteTemplates");
 
-beforeAll(_beforeAll);
-afterAll(_afterAll);
-beforeEach(_beforeEach);
-afterEach(_afterEach);
+beforeAll(_BeforeAll);
+beforeEach(_BeforeEach);
+afterEach(_AfterEach);
+afterAll(_AfterAll);
 
-/***** POST /auth/token *****/
+/*****  POST /auth/token *****/
 
-describe("POST /auth/token", () => {
-  test("route works", async () => {
-    expect.assertions(1);
-    const res = await request(app).post("/auth/token").send({
-      username: "user1",
-      password: "john1234",
-    });
-    expect(res.body).toEqual({
+describe("POST /auth/token", function () {
+  test("works", async function () {
+    const resp = await request(app)
+        .post("/auth/token")
+        .send({
+          username: "u1",
+          password: "password1",
+        });
+    expect(resp.body).toEqual({
       "token": expect.any(String),
     });
   });
 
-  test("unauthorized with non-existant user", async () => {
-    expect.assertions(1);
-    const res = await request(app).post("/auth/token").send({
-      username: "non-existant-user",
-      password: "password1234",
-    });
-    expect(res.statusCode).toEqual(401);
+  test("unauth with non-existent user", async function () {
+    const resp = await request(app)
+        .post("/auth/token")
+        .send({
+          username: "no-such-user",
+          password: "password1",
+        });
+    expect(resp.statusCode).toEqual(401);
   });
 
-  test("unauthorized with incorrect password", async () => {
-    expect.assertions(1);
-    const res = await request(app).post("/auth/token").send({
-      username: "user2",
-      password: "jane12345",
-    });
-    expect(res.statusCode).toEqual(401);
+  test("unauth with wrong password", async function () {
+    const resp = await request(app)
+        .post("/auth/token")
+        .send({
+          username: "u1",
+          password: "nope",
+        });
+    expect(resp.statusCode).toEqual(401);
   });
 
-  test("bad request with missing data", async () => {
-    expect.assertions(1);
-    const res = await request(app).post("/auth/token").send({
-      username: "user2",
-    });
-    expect(res.statusCode).toEqual(400);
+  test("bad request with missing data", async function () {
+    const resp = await request(app)
+        .post("/auth/token")
+        .send({
+          username: "u1",
+        });
+    expect(resp.statusCode).toEqual(400);
   });
 
-  test("bad request with invalid data", async () => {
-    expect.assertions(1);
-    const res = await request(app).post("/auth/token").send({
-      username: 37,
-      password: "anything",
-    });
-    expect(res.statusCode).toEqual(400);
+  test("bad request with invalid data", async function () {
+    const resp = await request(app)
+        .post("/auth/token")
+        .send({
+          username: 42,
+          password: "above-is-a-number",
+        });
+    expect(resp.statusCode).toEqual(400);
   });
 });
 
 /***** POST /auth/register *****/
 
-describe("POST auth/register", () => {
-  test("works for anon", async () => {
-    // expect.assertions(3);
-    const res = await request(app).post("/auth/register").send({
-      username: "new-user-1",
-      firstName: "Jon",
-      lastName: "Doe",
-      password: "jon1234",
-      email: "jon@doe.com",
-    });
-    expect(res.statusCode).toEqual(201);
-    expect(res.body).toEqual({
-      token: expect.any(String),
+describe("POST /auth/register", function () {
+  test("works for anon", async function () {
+    const resp = await request(app)
+        .post("/auth/register")
+        .send({
+          username: "new",
+          firstName: "first",
+          lastName: "last",
+          password: "password",
+          email: "new@email.com",
+        });
+    expect(resp.statusCode).toEqual(201);
+    expect(resp.body).toEqual({
+      "token": expect.any(String),
     });
   });
 
-  test("bad request with missing data", async () => {
-    expect.assertions(1);
-    const res = await request(app).post("/auth/register").send({
-      username: "test-new-user",
-    });
-    expect(res.statusCode).toEqual(400);
+  test("bad request with missing fields", async function () {
+    const resp = await request(app)
+        .post("/auth/register")
+        .send({
+          username: "new",
+        });
+    expect(resp.statusCode).toEqual(400);
   });
 
-  test("bad request with invalid data", async () => {
-    expect.assertions(1);
-    const res = await request(app).post("/auth/register").send({
-      username: 28,
-      password: "password1234",
-    });
-    expect(res.statusCode).toEqual(400);
+  test("bad request with invalid data", async function () {
+    const resp = await request(app)
+        .post("/auth/register")
+        .send({
+          username: "new",
+          firstName: "first",
+          lastName: "last",
+          password: "password",
+          email: "not-an-email",
+        });
+    expect(resp.statusCode).toEqual(400);
   });
 });

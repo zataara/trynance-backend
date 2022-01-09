@@ -17,18 +17,19 @@ function authenticateJWT(req, res, next) {
   }
 }
 
-function ensureLoggedIn(req, res, next) {
+function ensureCorrectUserOrAdmin(req, res, next) {
   try {
-    if (!res.locals.user) throw new UnauthorizedError();
+    const user = res.locals.user;
+    if (!(user && (user.isAdmin || user.username === req.params.username))) {
+      throw new UnauthorizedError();
+    }
     return next();
-  } catch (e) {
-    return next(e);
+  } catch (err) {
+    return next(err);
   }
 }
 
-
-
 module.exports = {
   authenticateJWT,
-  ensureLoggedIn,
+  ensureCorrectUserOrAdmin,
 };

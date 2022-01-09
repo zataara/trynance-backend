@@ -19,7 +19,7 @@ app.use(morgan("tiny"));
 app.use(authenticateJWT);
 
 app.use("/auth", authRoutes);
-app.use("/user", userRoutes);
+app.use("/users", userRoutes);
 
 // Handles 404 Errors
 app.use(function (req, res, next) {

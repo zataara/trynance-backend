@@ -1,4 +1,4 @@
-\echo 'Delete and recreate jobly db?'
+\echo 'Delete and recreate trynance db?'
 \prompt 'Return for yes or control-C to cancel > ' foo
 
 DROP DATABASE trynance;
@@ -8,7 +8,7 @@ CREATE DATABASE trynance;
 \i trynance-schema.sql
 \i trynance-seed.sql
 
-\echo 'Delete and recreate jobly_test db?'
+\echo 'Delete and recreate trynance_test db?'
 \prompt 'Return for yes or control-C to cancel > ' foo
 
 DROP DATABASE trynance_test;

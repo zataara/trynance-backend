@@ -8,4 +8,25 @@ CREATE TABLE users (
   is_admin BOOLEAN NOT NULL DEFAULT FALSE
 );
 
+CREATE TABLE trades (
+  id PRIMARY KEY,
+  user_id FOREIGN kEY,
+  currency_from_amount INTEGER NOT NULL,
+  currency_from TEXT NOT NULL,
+  currency_to_amount INTEGER NOT NULL,
+  currency_to TEXT NOT NULL,
+  datetime DATETIME
+);
+
+CREATE TABLE assets (
+  symbol PRIMARY KEY,
+  user_id FOREIGN KEY,
+  amount INTEGER
+);
+
+CREATE TABLE faves (
+  user_id FOREIGN KEY
+  symbol PRIMARY KEY
+);
+
 

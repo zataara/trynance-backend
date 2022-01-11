@@ -9,24 +9,27 @@ CREATE TABLE users (
 );
 
 CREATE TABLE trades (
-  id PRIMARY KEY,
-  user_id FOREIGN kEY,
+  id SERIAL PRIMARY KEY,
+  user_id TEXT NOT NULL
+    REFERENCES users ON DELETE CASCADE,
   currency_from_amount INTEGER NOT NULL,
   currency_from TEXT NOT NULL,
   currency_to_amount INTEGER NOT NULL,
   currency_to TEXT NOT NULL,
-  datetime DATETIME
+  datetime TEXT NOT NULL
 );
 
 CREATE TABLE assets (
-  symbol PRIMARY KEY,
-  user_id FOREIGN KEY,
+  id SERIAL PRIMARY KEY,
+  symbol TEXT NOT NULL,
+  user_id TEXT NOT NULL
+    REFERENCES users ON DELETE CASCADE,
   amount INTEGER
 );
 
 CREATE TABLE faves (
-  user_id FOREIGN KEY
-  symbol PRIMARY KEY
+  id SERIAL PRIMARY KEY,
+  symbol TEXT NOT NULL,
+  user_id TEXT NOT NULL
+    REFERENCES users ON DELETE CASCADE
 );
-
-

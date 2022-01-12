@@ -72,13 +72,7 @@ class User {
            RETURNING username, first_name AS "firstName", last_name AS "lastName", email, is_admin AS "isAdmin"`,
       [username, hashedPassword, firstName, lastName, email, isAdmin]
     );
-    const fundAccount = await db.query(
-      `INSERT INTO assets
-        (symbol,
-          user_id,
-          amount)
-        VALUES ("usd", $1, 1000)`,[username]
-    );
+    
 
     const user = result.rows[0];
 

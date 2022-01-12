@@ -72,9 +72,27 @@ class User {
            RETURNING username, first_name AS "firstName", last_name AS "lastName", email, is_admin AS "isAdmin"`,
       [username, hashedPassword, firstName, lastName, email, isAdmin]
     );
-    
 
     const user = result.rows[0];
+
+    return user;
+  }
+
+  static async get(username) {
+    const res = await db.query(
+      `SELECT username,
+                  first_name AS "firstName",
+                  last_name AS "lastName",
+                  email,
+                  is_admin AS "isAdmin"
+           FROM users
+           WHERE username = $1`,
+      [username]
+    );
+
+    const user = res.rows[0];
+
+    if (!user) throw new NotFoundError(`No user: ${username}`);
 
     return user;
   }

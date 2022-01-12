@@ -29,8 +29,9 @@ class Faves {
         AND symbol = $2`,
       [username, symbol]
     );
-      console.log(faves.rows[0])
+
     if (faves.rows[0]) {
+      console.log("fave found", faves.rows[0]);
       await db.query(
         `DELETE
             FROM faves
@@ -38,18 +39,25 @@ class Faves {
             AND  symbol = $2`,
         [username, symbol]
       );
-      console.log(JSON.stringify({ deleted: symbol }))
+      console.log(JSON.stringify({ deleted: symbol }));
       return JSON.stringify({ deleted: symbol });
     } else {
-      const markFave = await db.query(
-        `INSERT INTO faves
+      console.log("fave not found");
+      console.log({username}, symbol);
+      try {
+        const markFave = await db.query(
+          `INSERT INTO faves
             (symbol,
               user_id)
               VALUES ($1, $2)
-              RETURNING symbol, user_id as "username"`,
-        [symbol, username]
-      );
-      return JSON.stringify({ markFave });
+              RETURNING user_id AS "username, symbol"`,
+          [symbol, username]
+        )
+      console.log("new record created", markFave.rows[0]);
+      return JSON.stringify( markFave.rows[0] );
+      } catch (e) {
+        return e.stack;
+      }
     }
   }
 }

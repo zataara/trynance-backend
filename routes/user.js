@@ -1,22 +1,34 @@
 "use stric";
 
 const express = require("express");
-const { ensureCorrectUserOrAdmin } = require("../middleware/auth");
+
+/*** Errors ***/
 const { BadRequestError } = require("../expressError");
+
+/*** Models ***/
 const User = require("../models/user");
 const Trades = require("../models/trades");
 const Assets = require("../models/assets");
 const Faves = require("../models/faves");
 
+/*** Auth ***/
+const { ensureCorrectUserOrAdmin } = require("../middleware/auth");
 const { createToken } = require("../helpers/tokens");
+
+/*** Schemas ***/
 const jsonschema = require("jsonschema");
-const userNewSchema = require("../schemas/userNew.json");
+const newUserSchema = require("../schemas/userNew");
+const userAuthSchema = require("../schemas/userAuth");
+const tradeSchema = require("../schemas/trades");
+const favesSchema = require("../schemas/faves");
+const assetsSchema = require("../schemas/assets");
+
 
 const router = express.Router();
 
 router.get(
   "/:username",
-  ensureCorrectUserOrAdmin,
+  // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
       const user = await User.get(req.params.username);
@@ -29,7 +41,7 @@ router.get(
 
 router.get(
   "/:username/assets",
-  ensureCorrectUserOrAdmin,
+  // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
       return Assets.getAll(req.params.username);
@@ -41,7 +53,7 @@ router.get(
 
 router.get(
   "/:username/trades",
-  ensureCorrectUserOrAdmin,
+  // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
       return Trades.getAll(req.params.username);
@@ -53,7 +65,7 @@ router.get(
 
 router.post(
   "/:username/trades/:cfa/:cf/:cta/:ct/:dt",
-  ensureCorrectUserOrAdmin,
+  // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
       return Trades.postTrade(
@@ -72,7 +84,7 @@ router.post(
 
 router.get(
   "/:username/faves",
-  ensureCorrectUserOrAdmin,
+  // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
       return res.json(Faves.getAll(req.params.username));
@@ -84,10 +96,10 @@ router.get(
 
 router.post(
   "/:username/faves/:fave",
-  ensureCorrectUserOrAdmin,
+  // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-      return Faves.postFave(req.params.username, req.params.fave);
+      return Faves.post(req.params.username, req.params.fave);
     } catch (e) {
       return next(e);
     }

@@ -47,7 +47,7 @@ router.get(
   // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-      return Assets.getAll(req.params.username);
+      return Assets.get(req.params.username);
     } catch (e) {
       return next(e);
     }

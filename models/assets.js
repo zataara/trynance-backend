@@ -8,13 +8,14 @@ const {
 } = require("../expressError");
 
 class Assets {
-  static async getAll(username) {
+  static async get(username) {
     const assets = await db.query(
       `SELECT * 
       FROM assets
       WHERE user_id = $1`,
       [username]
     );
+    console.log( assets.rows)
     return JSON.stringify( assets.rows );
   }
 }

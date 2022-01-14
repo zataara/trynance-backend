@@ -87,7 +87,7 @@ router.get(
   // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-      return res.json(Faves.getAll(req.params.username));
+      return res.json(Faves.get(req.params.username));
     } catch (e) {
       return next(e);
     }
@@ -102,6 +102,18 @@ router.post(
       return Faves.post(req.params.username, req.params.fave);
     } catch (e) {
       return next(e);
+    }
+  }
+);
+
+router.delete(
+  "/:username/faves/:fave",
+  // esnureCorrectUserOrAdmin,
+  async function (req, res, next) {
+    try {
+      return Faves.delete(req.params.username, req.params.fave);
+    } catch (e){
+      return next(e)
     }
   }
 );

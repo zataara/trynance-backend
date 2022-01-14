@@ -26,6 +26,8 @@ const assetsSchema = require("../schemas/assets");
 
 const router = express.Router();
 
+/***** User Routes *****/
+
 router.get(
   "/:username",
   // ensureCorrectUserOrAdmin,
@@ -39,6 +41,7 @@ router.get(
   }
 );
 
+/***** Asset Routes *****/
 router.get(
   "/:username/assets",
   // ensureCorrectUserOrAdmin,
@@ -51,12 +54,14 @@ router.get(
   }
 );
 
+/***** Trade Routes *****/
+
 router.get(
   "/:username/trades",
   // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-      return Trades.getAll(req.params.username);
+      return Trades.get(req.params.username);
     } catch (e) {
       return next(e);
     }
@@ -68,7 +73,7 @@ router.post(
   // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-      return Trades.postTrade(
+      return Trades.post(
         req.params.username,
         req.params.cfa,
         ret.params.cd,
@@ -81,6 +86,8 @@ router.post(
     }
   }
 );
+
+/***** Fave Routes *****/
 
 router.get(
   "/:username/faves",

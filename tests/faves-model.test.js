@@ -24,7 +24,7 @@ let username = "u1";
 
 describe("Get All Faves", function () {
   test("returns correct data", async function () {
-    let faves = await Faves.getAll(username);
+    let faves = await Faves.get(username);
     expect(faves).toContain("eth");
     expect(faves).toContain("btc");
     expect(faves).toContain("xlm");
@@ -34,42 +34,43 @@ describe("Get All Faves", function () {
 describe("Updates faves", function () {
   test("create new fave if not faved before", async function () {
     await Faves.post(username, "xrp");
-    let faves = await Faves.getAll(username);
+    let faves = await Faves.get(username);
     expect(faves).toContain("xrp");
   });
 
   test("toggles faves off if already faved", async function () {
-    let faves = await Faves.getAll(username);
+    let faves = await Faves.get(username);
     expect(faves).toContain("xlm");
-    await Faves.post(username, "xlm");
-    faves = await Faves.getAll(username);
+    await Faves.delete(username, "xlm");
+    faves = await Faves.get(username);
     expect(faves).not.toContain("xlm");
   });
 
   test("toggles fave back on after being unfaved", async function () {
     await Faves.post(username, "xlm");
-    let faves = await Faves.getAll(username);
+    let faves = await Faves.get(username);
     expect(faves).toContain("xlm");
   });
 
   test("toggles faves off again already faved", async function () {
-    await Faves.post(username, "xlm");
-    let faves = await Faves.getAll(username);
+    await Faves.delete(username, "xlm");
+    let faves = await Faves.get(username);
     expect(faves).not.toContain("xlm");
   });
 
+
   test("toggles faves back on after previously being a fav and deleted", async function () {
     await Faves.post(username, "shib");
-    let faves = await Faves.getAll(username);
+    let faves = await Faves.get(username);
     expect(faves).toContain("shib");
-    await Faves.post(username, "shib");
-    faves = await Faves.getAll(username);
+    await Faves.delete(username, "shib");
+    faves = await Faves.get(username);
     expect(faves).not.toContain("shib");
     await Faves.post(username, "shib");
-    faves = await Faves.getAll(username);
+    faves = await Faves.get(username);
     expect(faves).toContain("shib");
-    await Faves.post(username, "shib");
-    faves = await Faves.getAll(username);
+    await Faves.delete(username, "shib");
+    faves = await Faves.get(username);
     expect(faves).not.toContain("shib");
   });
 });

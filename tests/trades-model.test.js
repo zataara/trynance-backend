@@ -26,7 +26,7 @@ const username = "u1";
 
 describe("Trades are operating correctly", function () {
   test("returns correct data", async function () {
-    let trades = await Trades.getAll(username);
+    let trades = await Trades.get(username);
     expect(trades).toContain("eth");
     expect(trades).toContain("btc");
     expect(trades).toContain("xrp");
@@ -37,12 +37,12 @@ describe("assets are updating correctly with trade acivity", function () {
   test("trade creates new asset", async function () {
     await Trades.post(username, 1, "eth", 1, "ltc", "time");
 
-    let assets = await Assets.getAll(username);
+    let assets = await Assets.get(username);
     expect(assets).toContain(`"symbol":"ltc","user_id":"u1","amount":1`);
     expect(assets).toContain(`"symbol":"eth","user_id":"u1","amount":0`);
 
     await Trades.post(username, 1, "ltc", 2, "sol", "time");
-    let assets2 = await Assets.getAll(username);
+    let assets2 = await Assets.get(username);
     expect(assets2).toContain(`"symbol":"ltc","user_id":"u1","amount":0`);
     expect(assets2).toContain(`"symbol":"sol","user_id":"u1","amount":2`);
   });
@@ -50,6 +50,6 @@ describe("assets are updating correctly with trade acivity", function () {
   test("fails if insufficient funds", async function () {
     let res = await Trades.post(username, 1, "amc", 2, "ltc", "time");
 
-    expect(res).toContain(`"status":"failed: insufficient funds"`);
+    expect(res).toContain(`"status":"Failed: insufficient funds"`);
   });
 });

@@ -14,3 +14,10 @@ VALUES ('testuser',
         'joel@joelburton.com',
         TRUE);
 
+INSERT INTO faves (symbol, user_id)
+VALUES ('btc', 'testuser'),
+        ('eth', 'testuser'),
+        ('sol', 'testuser'),
+        ('usdc', 'testuser'),
+        ('xlm', 'testuser');
+        

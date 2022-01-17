@@ -31,7 +31,6 @@ class Faves {
               RETURNING user_id AS "username, symbol"`,
         [symbol, username]
       );
-      console.log(JSON.stringify("added", newFave.rows[0]))
       return newFave.rows[0];
     } catch (e) {
       return e.stack;
@@ -48,7 +47,6 @@ class Faves {
             AND  symbol = $2`,
         [username, symbol]
       );
-      console.log(JSON.stringify({ deleted: symbol }));
       return { deleted: symbol };
     } catch (e) {
       return e.stack;

@@ -47,7 +47,8 @@ router.get(
   // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-      return Assets.get(req.params.username);
+      const response = await Assets.get(req.params.username);
+      return res.json(response)
     } catch (e) {
       return next(e);
     }
@@ -61,7 +62,8 @@ router.get(
   // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-      return Trades.get(req.params.username);
+      const response = await Trades.get(req.params.username);
+      return res.json(response);
     } catch (e) {
       return next(e);
     }
@@ -73,7 +75,7 @@ router.post(
   // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-      return Trades.post(
+      const response =  await Trades.post(
         req.params.username,
         req.params.cfa,
         ret.params.cd,
@@ -81,6 +83,8 @@ router.post(
         req.params.ct,
         req.params.dt
       );
+
+      return res.json(response)
     } catch (e) {
       return next(e);
     }
@@ -94,7 +98,8 @@ router.get(
   // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-      return res.json(Faves.get(req.params.username));
+      const response = await (Faves.get(req.params.username));
+      return res.json(response)
     } catch (e) {
       return next(e);
     }
@@ -106,7 +111,8 @@ router.post(
   // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-      return Faves.post(req.params.username, req.params.fave);
+      const response = await Faves.post(req.params.username, req.params.fave);
+      return res.status(201).json(response)
     } catch (e) {
       return next(e);
     }
@@ -118,7 +124,8 @@ router.delete(
   // esnureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-      return Faves.delete(req.params.username, req.params.fave);
+      const response = await Faves.delete(req.params.username, req.params.fave);
+      return res.status(200).json(response)
     } catch (e){
       return next(e)
     }

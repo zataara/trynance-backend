@@ -11,13 +11,13 @@ class Faves {
   static async get(username) {
     //get a list of all the faves.
     const faves = await db.query(
-      `SELECT user_id AS "username", symbol
+      `SELECT symbol
       FROM faves
       WHERE user_id = $1 
       `,
       [username]
     );
-    return JSON.stringify(faves.rows);
+    return faves.rows;
   }
 
   //post a new fave
@@ -31,8 +31,8 @@ class Faves {
               RETURNING user_id AS "username, symbol"`,
         [symbol, username]
       );
-      console.log(JSON.stringify(newFave.rows[0]))
-      return JSON.stringify(newFave.rows[0]);
+      console.log(JSON.stringify("added", newFave.rows[0]))
+      return newFave.rows[0];
     } catch (e) {
       return e.stack;
     }
@@ -49,7 +49,7 @@ class Faves {
         [username, symbol]
       );
       console.log(JSON.stringify({ deleted: symbol }));
-      return JSON.stringify({ deleted: symbol });
+      return { deleted: symbol };
     } catch (e) {
       return e.stack;
     }

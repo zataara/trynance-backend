@@ -15,10 +15,12 @@ CREATE TABLE trades (
   currency_from_amount FLOAT NOT NULL
     CHECK(currency_from_amount >= 0),
   currency_from_price TEXT NOT NULL,
+  currency_from_image TEXT NOT NULL,
   currency_from TEXT NOT NULL,
   currency_to_amount FLOAT NOT NULL
     CHECK(currency_to_amount >= 0),
   currency_to_price TEXT NOT NULL,
+  currency_to_image TEXT NOT NULL,
   currency_to TEXT NOT NULL,
   date TEXT NOT NULL
 );
@@ -28,7 +30,9 @@ CREATE TABLE assets (
   symbol TEXT NOT NULL,
   user_id TEXT NOT NULL
     REFERENCES users ON DELETE CASCADE,
-  amount INTEGER
+  amount INTEGER,
+  image TEXT NOT NULL,
+  name TEXT NOT NULL
 );
 
 CREATE TABLE faves (

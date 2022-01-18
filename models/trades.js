@@ -10,7 +10,7 @@ const {
 class Trades {
   static async get(username) {
     const trades = await db.query(
-      `SELECT * 
+      `SELECT currency_from_amount, currency_from_price, currency_from, currency_to_amount, currency_to_price, currency_to, date
         FROM trades
         WHERE user_id = $1`,
       [username]
@@ -35,8 +35,7 @@ class Trades {
 
     //initiate making a trade
     try {
-
-      const newAmount = assetsFrom.rows[0]["amount"] - cfa; 
+      const newAmount = assetsFrom.rows[0]["amount"] - cfa;
       const newTrade = await db.query(
         `INSERT INTO trades
           (user_id,
@@ -79,7 +78,7 @@ class Trades {
             RETURNING symot, amount`,
           [currentAssetAmountTo + cta, ct, username]
         );
-        console.log("Currency To Amount Updated", updatedAsset.rows[0])
+        console.log("Currency To Amount Updated", updatedAsset.rows[0]);
       } else {
         const newAsset = await db.query(
           `INSERT INTO assets
@@ -93,11 +92,11 @@ class Trades {
             `,
           [ct, username, cta]
         );
-        console.log("Currency To Amount Created", newAsset.rows[0])
+        console.log("Currency To Amount Created", newAsset.rows[0]);
       }
     } catch (e) {
       console.log({ Status: "Failed" });
-      console.log(e.stack)
+      console.log(e.stack);
       return e.stack;
     }
   }

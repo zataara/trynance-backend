@@ -23,7 +23,6 @@ const tradeSchema = require("../schemas/trades");
 const favesSchema = require("../schemas/faves");
 const assetsSchema = require("../schemas/assets");
 
-
 const router = express.Router();
 
 /***** User Routes *****/
@@ -48,7 +47,7 @@ router.get(
   async function (req, res, next) {
     try {
       const response = await Assets.get(req.params.username);
-      return res.json(response)
+      return res.json(response);
     } catch (e) {
       return next(e);
     }
@@ -75,7 +74,7 @@ router.post(
   // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-      const response =  await Trades.post(
+      const response = await Trades.post(
         req.params.username,
         req.params.cfa,
         ret.params.cd,
@@ -84,7 +83,7 @@ router.post(
         req.params.dt
       );
 
-      return res.json(response)
+      return res.status(201).json(response);
     } catch (e) {
       return next(e);
     }
@@ -98,8 +97,8 @@ router.get(
   // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-      const response = await (Faves.get(req.params.username));
-      return res.json(response)
+      const response = await Faves.get(req.params.username);
+      return res.json(response);
     } catch (e) {
       return next(e);
     }
@@ -112,7 +111,7 @@ router.post(
   async function (req, res, next) {
     try {
       const response = await Faves.post(req.params.username, req.params.fave);
-      return res.status(201).json(response)
+      return res.status(201).json(response);
     } catch (e) {
       return next(e);
     }
@@ -125,9 +124,9 @@ router.delete(
   async function (req, res, next) {
     try {
       const response = await Faves.delete(req.params.username, req.params.fave);
-      return res.status(200).json(response)
-    } catch (e){
-      return next(e)
+      return res.status(200).json(response);
+    } catch (e) {
+      return next(e);
     }
   }
 );

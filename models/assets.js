@@ -10,12 +10,12 @@ const {
 class Assets {
   static async get(username) {
     const assets = await db.query(
-      `SELECT * 
+      `SELECT symbol, amount 
       FROM assets
       WHERE user_id = $1`,
       [username]
     );
-    console.log( assets.rows)
+    console.log(assets.rows)
     return JSON.stringify( assets.rows );
   }
 }

@@ -14,11 +14,13 @@ CREATE TABLE trades (
     REFERENCES users ON DELETE CASCADE,
   currency_from_amount FLOAT NOT NULL
     CHECK(currency_from_amount >= 0),
+  currency_from_price TEXT NOT NULL,
   currency_from TEXT NOT NULL,
   currency_to_amount FLOAT NOT NULL
     CHECK(currency_to_amount >= 0),
+  currency_to_price TEXT NOT NULL,
   currency_to TEXT NOT NULL,
-  datetime TEXT NOT NULL
+  date TEXT NOT NULL
 );
 
 CREATE TABLE assets (

@@ -10,7 +10,7 @@ const {
 class Trades {
   static async get(username) {
     const trades = await db.query(
-      `SELECT currency_from_amount, currency_from_price, currency_from, currency_to_amount, currency_to_price, currency_to, date
+      `SELECT *
         FROM trades
         WHERE user_id = $1`,
       [username]

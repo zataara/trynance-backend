@@ -21,15 +21,15 @@ VALUES ('btc', 'testuser'),
         ('usdc', 'testuser'),
         ('xlm', 'testuser');
 
-INSERT INTO assets (symbol, user_id, amount)
-VALUES ('dot', 'testuser', 4),
-      ('shib', 'testuser', 100000),
-      ('busd', 'testuser', 5000),
-      ('atom', 'testuser', 22);
+INSERT INTO assets (symbol, user_id, amount, image, name)
+VALUES ('dot', 'testuser', 4, 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579', 'Polkadot'),
+      ('shib', 'testuser', 100000, 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579', 'Shiba Inu'),
+      ('busd', 'testuser', 5000, 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579', 'Binance USD'),
+      ('atom', 'testuser', 22, 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579', 'Cosmos');
 
-INSERT INTO trades (user_id, currency_from_amount, currency_from_price, currency_from, currency_to_amount, currency_to_price, currency_to, date)
-VALUES ('testuser', 1, 63000, 'btc', 10, 6000, 'eth', 'Mon Jan 1 2022' ), 
-      ('testuser', 10, 2, 'xrp', 10, 1, 'xlm', 'Mon Jan 8 2022'), 
-      ('testuser', 1, 1000000, 'shib', 1, 60, 'eos','Mon Jan 17 2022');
+INSERT INTO trades (user_id, currency_from_amount, currency_from_price, currency_from_image, currency_from, currency_to_amount, currency_to_price,currency_to_image, currency_to, date)
+VALUES ('testuser', 1, 63000, 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579', 'Bitcoin', 10, 6000, 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579', 'Ethereum', 'Mon Jan 1 2022' ), 
+      ('testuser', 10, 2, 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579', 'XRP', 10, 1, 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579', 'Stellar', 'Mon Jan 8 2022'), 
+      ('testuser', 1, 1000000, 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579', 'Shiba Inu', 1, 60, 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579', 'EOS','Mon Jan 17 2022');
 
         

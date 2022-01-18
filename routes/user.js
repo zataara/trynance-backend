@@ -13,15 +13,9 @@ const Faves = require("../models/faves");
 
 /*** Auth ***/
 const { ensureCorrectUserOrAdmin } = require("../middleware/auth");
-const { createToken } = require("../helpers/tokens");
 
-/*** Schemas ***/
-const jsonschema = require("jsonschema");
-const newUserSchema = require("../schemas/userNew");
-const userAuthSchema = require("../schemas/userAuth");
-const tradeSchema = require("../schemas/trades");
-const favesSchema = require("../schemas/faves");
-const assetsSchema = require("../schemas/assets");
+/*** Schema ***/
+const tradeSchema = require("../schemas/tradSchema")
 
 const router = express.Router();
 
@@ -41,6 +35,7 @@ router.get(
 );
 
 /***** Asset Routes *****/
+
 router.get(
   "/:username/assets",
   // ensureCorrectUserOrAdmin,
@@ -62,6 +57,7 @@ router.get(
   async function (req, res, next) {
     try {
       const response = await Trades.get(req.params.username);
+      console.log(res.json(response))
       return res.json(response);
     } catch (e) {
       return next(e);
@@ -70,20 +66,17 @@ router.get(
 );
 
 router.post(
-  "/:username/trades/:cfa/:cf/:cta/:ct/:dt",
+  "/:username/trades",
   // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-      const response = await Trades.post(
-        req.params.username,
-        req.params.cfa,
-        ret.params.cd,
-        req.params.cta,
-        req.params.ct,
-        req.params.dt
-      );
-
-      return res.status(201).json(response);
+        const validator = jsonschema.validate(req.body, tradeSchema)
+        if (!validator.valid) {
+          const errs = validator.errors.map(e => e.stack);
+          throw new BadRequestError(errs);
+        }
+      const response = await Trades.post(req.body);
+      return res.json(response);
     } catch (e) {
       return next(e);
     }
@@ -111,7 +104,7 @@ router.post(
   async function (req, res, next) {
     try {
       const response = await Faves.post(req.params.username, req.params.fave);
-      return res.status(201).json(response);
+      return res.json(response);
     } catch (e) {
       return next(e);
     }
@@ -124,7 +117,7 @@ router.delete(
   async function (req, res, next) {
     try {
       const response = await Faves.delete(req.params.username, req.params.fave);
-      return res.status(200).json(response);
+      return res.json(response);
     } catch (e) {
       return next(e);
     }

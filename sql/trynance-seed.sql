@@ -20,4 +20,13 @@ VALUES ('btc', 'testuser'),
         ('sol', 'testuser'),
         ('usdc', 'testuser'),
         ('xlm', 'testuser');
+
+INSERT INTO assets (symbol, user_id, amount)
+VALUES ('dot', 'testuser', 4),
+      ('shib', 'testuser', 100000),
+      ('busd', 'testuser', 5000),
+      ('atom', 'testuser', 22);
+
+
+
         

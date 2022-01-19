@@ -73,6 +73,18 @@ class User {
       [username, hashedPassword, firstName, lastName, email, isAdmin]
     );
 
+    const fundAccount = await db.query(
+      `INSERT INTO assets
+            (symbol
+            ,user_id
+            ,amount
+            ,image
+            ,name)
+            VALUES ('Tether', $1, 1000, 'https://assets.coingecko.com/coins/images/325/large/Tether-logo.png?1598003707', 'Tether')`,
+            [username]
+    );
+    console.log('funding')
+
     const user = result.rows[0];
 
     return user;

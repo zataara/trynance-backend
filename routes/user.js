@@ -15,7 +15,7 @@ const Faves = require("../models/faves");
 const { ensureCorrectUserOrAdmin } = require("../middleware/auth");
 
 /*** Schema ***/
-const tradeSchema = require("../schemas/tradSchema")
+const tradeSchema = require("../schemas/trades.json");
 
 const router = express.Router();
 
@@ -57,7 +57,6 @@ router.get(
   async function (req, res, next) {
     try {
       const response = await Trades.get(req.params.username);
-      console.log(res.json(response))
       return res.json(response);
     } catch (e) {
       return next(e);
@@ -70,12 +69,8 @@ router.post(
   // ensureCorrectUserOrAdmin,
   async function (req, res, next) {
     try {
-        const validator = jsonschema.validate(req.body, tradeSchema)
-        if (!validator.valid) {
-          const errs = validator.errors.map(e => e.stack);
-          throw new BadRequestError(errs);
-        }
       const response = await Trades.post(req.body);
+      console.log(response)
       return res.json(response);
     } catch (e) {
       return next(e);

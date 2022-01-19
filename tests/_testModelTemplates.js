@@ -41,8 +41,10 @@ async function _BeforeAll() {
     `INSERT INTO trades(
                           user_id,
                           currency_from_amount,
+                          currency_from_image,
                           currency_from,
                           currency_to_amount,
+                          currency_to_image,
                           currency_to,
                           datetime)
         VALUES('u1', 1, 'btc', 1, 'eth', 

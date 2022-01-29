@@ -12,7 +12,7 @@ const Assets = require("../models/assets");
 const Faves = require("../models/faves");
 
 /*** Auth ***/
-const { ensureCorrectUserOrAdmin } = require("../middleware/auth");
+const { ensureCorrectUser } = require("../middleware/auth");
 
 /*** Schema ***/
 const tradeSchema = require("../schemas/trades.json");
@@ -23,7 +23,7 @@ const router = express.Router();
 
 router.get(
   "/:username",
-  // ensureCorrectUserOrAdmin,
+  ensureCorrectUser,
   async function (req, res, next) {
     try {
       const user = await User.get(req.params.username);
@@ -38,7 +38,7 @@ router.get(
 
 router.get(
   "/:username/assets",
-  // ensureCorrectUserOrAdmin,
+  ensureCorrectUser,
   async function (req, res, next) {
     try {
       const response = await Assets.get(req.params.username);
@@ -53,7 +53,7 @@ router.get(
 
 router.get(
   "/:username/trades",
-  // ensureCorrectUserOrAdmin,
+  ensureCorrectUser,
   async function (req, res, next) {
     try {
       const response = await Trades.get(req.params.username);
@@ -66,7 +66,7 @@ router.get(
 
 router.post(
   "/:username/trades",
-  // ensureCorrectUserOrAdmin,
+  ensureCorrectUser,
   async function (req, res, next) {
     try {
       const response = await Trades.post(req.body);
@@ -82,7 +82,7 @@ router.post(
 
 router.get(
   "/:username/faves",
-  // ensureCorrectUserOrAdmin,
+  ensureCorrectUser,
   async function (req, res, next) {
     try {
       const response = await Faves.get(req.params.username);
@@ -95,7 +95,7 @@ router.get(
 
 router.post(
   "/:username/faves/:fave",
-  // ensureCorrectUserOrAdmin,
+  ensureCorrectUser,
   async function (req, res, next) {
     try {
       const response = await Faves.post(req.params.username, req.params.fave);
@@ -108,7 +108,7 @@ router.post(
 
 router.delete(
   "/:username/faves/:fave",
-  // esnureCorrectUserOrAdmin,
+  ensureCorrectUser,
   async function (req, res, next) {
     try {
       const response = await Faves.delete(req.params.username, req.params.fave);

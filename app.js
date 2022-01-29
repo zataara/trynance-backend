@@ -21,11 +21,13 @@ app.use(authenticateJWT);
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 
-// Handles 404 Errors
+// Handle 404 Errors
 app.use(function (req, res, next) {
   return next(new NotFoundError());
 });
 
+
+// Handle all Errors
 app.use(function (err, req, res, next) {
   if (process.env.NODE_ENV !== "test") {
     console.error(err.stack);

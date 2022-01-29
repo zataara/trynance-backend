@@ -5,7 +5,7 @@ require("colors");
 
 const SECRET_KEY = process.env.SECRET_KEY || "secret-key";
 
-const PORT = +process.env.PORT || 3000;
+const PORT = +process.env.PORT || 3003;
 
 function getDatabaseUri() {
   return process.env.NODE_ENV === "test"
